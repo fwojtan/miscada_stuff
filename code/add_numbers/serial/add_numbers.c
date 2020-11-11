@@ -19,7 +19,12 @@ void add_numbers(int n_numbers, float *numbers) {
                       log(pow(fabs(numbers[i]), 1.9)) +
                       log(pow(fabs(numbers[i]), -1.97)) +
                       fabs(log(pow(fabs(numbers[i]), -1.005)));
-
+    if (result_i < 0) {
+        result_i = 0.0;
+    }
+    if (result > 1e20) { 
+        break;
+    }
     result += result_i;
   }
 
