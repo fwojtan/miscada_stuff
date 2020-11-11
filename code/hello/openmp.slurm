@@ -13,5 +13,5 @@ source /etc/profile.d/modules.sh
 module load intel/xe_2018.2
 module load gcc/9.3.0
 
-export OMP_NUM_THREADS=2
+export OMP_NUM_THREADS=8
 ./hello-openmp
