@@ -1,0 +1,35 @@
+Intel(R) Advisor can now assist with vectorization and show optimization
+  report messages with your source code.
+See "https://software.intel.com/en-us/intel-advisor-xe" for details.
+
+Intel(R) C Intel(R) 64 Compiler for applications running on Intel(R) 64, Version 18.0.2.199 Build 20180210
+
+Compiler options: -I. -std=c11 -O2 -qopt-report-phase=vec -qopt-report=3 -c -o filters.o
+
+Begin optimization report for: blur_mean(struct Image, int, struct Image *)
+
+    Report from: Vector optimizations [vec]
+
+
+LOOP BEGIN at filters.c(38,3)
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization. First dependence is shown below. Use level 5 report for details
+   remark #15346: vector dependence: assumed OUTPUT dependence between output->r[i] (39:5) and output (41:5)
+LOOP END
+
+LOOP BEGIN at filters.c(38,3)
+<Remainder>
+LOOP END
+
+LOOP BEGIN at filters.c(48,3)
+   remark #15541: outer loop was not auto-vectorized: consider using SIMD directive
+
+   LOOP BEGIN at filters.c(53,5)
+      remark #15541: outer loop was not auto-vectorized: consider using SIMD directive
+
+      LOOP BEGIN at filters.c(60,7)
+         remark #15344: loop was not vectorized: vector dependence prevents vectorization. First dependence is shown below. Use level 5 report for details
+         remark #15346: vector dependence: assumed OUTPUT dependence between output->r[id] (70:9) and output (72:9)
+      LOOP END
+   LOOP END
+LOOP END
+===========================================================================
