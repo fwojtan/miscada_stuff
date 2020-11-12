@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
   }
   read_ppm(argv[1], &myimage);
 
-  int n = 1;
+  int n = 5;
 
   blur_mean(myimage, n, &output);
 
