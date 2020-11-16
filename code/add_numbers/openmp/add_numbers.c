@@ -10,7 +10,7 @@
 #endif
 
 /* This function the numbers and prints the result. */
-void add_numbers(int n_numbers, float *numbers) {
+float static_add_numbers(int n_numbers, float *numbers) {
   printf("Adding %i numbers ...\n", n_numbers);
 
   float result = 0;
@@ -21,6 +21,7 @@ void add_numbers(int n_numbers, float *numbers) {
 #endif
 
   /* do the actual calculation */
+  #pragma omp parallel for schedule(static) default(none) shared(numbers, n_numbers) reduction(+:result)
   for (int i = 0; i < n_numbers; i++) {
     result += fabs(log(pow(fabs(numbers[i]), 2.1))) +
               log(pow(fabs(numbers[i]), 1.9)) +
@@ -39,4 +40,7 @@ void add_numbers(int n_numbers, float *numbers) {
 
   printf("The result is: %g\n", result);
   printf("Doing %i calculations took %g s\n", n_numbers, time);
+  return result;
 }
+
+

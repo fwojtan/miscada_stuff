@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
     /* random numbers in the interval (-1, 1) */
     numbers[i] = (float)(drand48() * 2. - 1.);
   }
-  add_numbers(n_numbers, numbers);
+  float result = static_add_numbers(n_numbers, numbers);
 
   free(numbers);
   return 0;
