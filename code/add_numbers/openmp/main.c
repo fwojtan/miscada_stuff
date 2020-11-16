@@ -45,7 +45,17 @@ int main(int argc, char *argv[]) {
     /* random numbers in the interval (-1, 1) */
     numbers[i] = (float)(drand48() * 2. - 1.);
   }
-  float result = static_add_numbers(n_numbers, numbers);
+
+
+  double static_time = static_add_numbers(n_numbers, numbers);
+  double dynamic_time = dynamic_add_numbers(n_numbers, numbers);
+  double guided_time = guided_add_numbers(n_numbers, numbers);
+  double auto_time = auto_add_numbers(n_numers, numbers);
+
+  printf('Static took: %f', static_time);
+  printf('Dynamic took: %f', dynamic_time);
+  printf('Guided took:', guided_time);
+  printf('Auto took:', auto_time);
 
   free(numbers);
   return 0;
