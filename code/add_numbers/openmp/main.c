@@ -47,16 +47,10 @@ int main(int argc, char *argv[]) {
   }
 
 
-  double static_time = static_add_numbers(n_numbers, numbers);
-  double dynamic_time = dynamic_add_numbers(n_numbers, numbers);
-  double guided_time = guided_add_numbers(n_numbers, numbers);
-  double auto_time = auto_add_numbers(n_numers, numbers);
-
-  printf('Static took: %f', static_time);
-  printf('Dynamic took: %f', dynamic_time);
-  printf('Guided took:', guided_time);
-  printf('Auto took:', auto_time);
-
+  static_add_numbers(n_numbers, numbers);
+  dynamic_add_numbers(n_numbers, numbers);
+  guided_add_numbers(n_numbers, numbers);
+  auto_add_numbers(n_numbers, numbers);
   free(numbers);
   return 0;
 }
