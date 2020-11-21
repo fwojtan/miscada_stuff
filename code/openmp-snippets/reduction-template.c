@@ -18,7 +18,7 @@ int main(int argc, char **argv)
   }
 
   double dotabparallel = 0;
-  start = omp_get_wtime();
+  double start = omp_get_wtime(); // is this a double? I just guessed what it was is that ok? I don't know
 #pragma omp parallel default(none) shared(a, b, N, dotabparallel)
   {
     /* Implement a parallel dot product using
