@@ -17,21 +17,100 @@ int main(int argc, char **argv)
     b[i] = (-1)*(i%2) * i;
   }
 
-  double dotabparallel = 0;
-  double start = omp_get_wtime(); // is this a double? I just guessed what it was is that ok? I don't know
-#pragma omp parallel default(none) shared(a, b, N, dotabparallel)
-  {
-    /* Implement a parallel dot product using
+  /* Implement a parallel dot product using
      *
      * 1. The approach of reduction-hand.c
      * 2. the reduction clause
      * 3. critical sections to protect the shared updates
      * 4. atomics to protect the shared updates.
+     * 
      */
-    for (size_t i = 0; i < N; i++) {
+  
+  double start;
+  double stop;
+
+  /**** Implement by hand ****/
+
+  start = omp_get_wtime();
+  double dotabparallel = 0;
+  double *dotlocal = NULL;
+#pragma omp parallel default(none) shared(a, b, N, dotabparallel, dotlocal)
+  {
+    int tid = omp_get_thread_num();
+  #pragma omp single
+    dotlocal = calloc(omp_get_num_threads(), sizeof(*dotlocal));
+  
+  #pragma omp for schedule(static)
+    for (int i = 0; i < N; i++) {
+      dotlocal[tid] += a[i]*b[i];
+    }
+
+  #pragma omp single nowait
+    for (int i = 0; i < omp_get_num_threads(); i++) {
+      dotabparallel += dotlocal[i];
     }
   }
-  printf("Parallel a.b = %.4g; took %.4g seconds\n", dotabparallel, omp_get_wtime() - start);
+stop = omp_get_wtime();
+printf("Parallel by hand \t\ta.b = %.9g; took %.4g seconds\n", dotabparallel, (stop - start));
+free(dotlocal);
+
+
+/**** Implement reduction clause version ****/
+
+start = omp_get_wtime();
+double dotreductionclause = 0;
+#pragma omp parallel default(none) shared(a, b, N) reduction(+:dotreductionclause)
+{
+  double dotlocal = 0;
+#pragma omp for schedule(static)
+  for (int i=0; i<N; i++) {
+    dotlocal += a[i]*b[i];
+  }
+
+  dotreductionclause += dotlocal;
+}
+stop = omp_get_wtime();
+printf("Parallel reduction clause \ta.b = %.9g; took %.4g seconds\n", dotreductionclause, (stop-start));
+
+
+/**** Implement critical section version ****/
+
+start = omp_get_wtime();
+double dotcritical = 0;
+#pragma omp parallel default(none) shared(a, b, N, dotcritical)
+{
+  double dotlocal = 0;
+#pragma omp for schedule(static)
+  for (int i=0; i<N; i++) {
+    dotlocal += a[i]*b[i];
+  }
+#pragma omp critical
+  dotcritical += dotlocal;
+}
+stop = omp_get_wtime();
+printf("Parallel critical \t\ta.b = %.9g; took %.4g seconds\n", dotcritical, (stop-start));
+
+
+/**** Implement atomics version ****/
+
+start = omp_get_wtime();
+double dotatomics = 0;
+#pragma omp parallel default(none) shared(a, b, N, dotatomics)
+{
+  double dotlocal = 0;
+#pragma omp for schedule(static)
+  for (int i=0; i<N; i++) {
+    dotlocal += a[i]*b[i];
+  }
+#pragma omp atomic
+  dotatomics += dotlocal;
+}
+stop = omp_get_wtime();
+printf("Parallel atomics \t\ta.b = %.9g; took %.4g seconds \n", dotatomics, (stop-start));
+
+
+
+
   free(a);
   free(b);
   return 0;
