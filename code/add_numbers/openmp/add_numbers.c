@@ -23,10 +23,10 @@ void static_add_numbers(int n_numbers, float *numbers) {
   /* do the actual calculation */
   #pragma omp parallel for schedule(static) default(none) shared(numbers, n_numbers) reduction(+:result)
   for (int i = 0; i < n_numbers; i++) {
-    result += fabs(log(pow(fabs(numbers[i]), 2.1))) +
-              log(pow(fabs(numbers[i]), 1.9)) +
-              log(pow(fabs(numbers[i]), -1.97)) +
-              fabs(log(pow(fabs(numbers[i]), -1.005)));
+    result += fabsf(logf(powf(fabsf(numbers[i]), 2.1))) +
+              logf(powf(fabsf(numbers[i]), 1.9)) +
+              logf(powf(fabsf(numbers[i]), -1.97)) +
+              fabsf(logf(powf(fabsf(numbers[i]), -1.005)));
   }
 
   /* time the calculation */

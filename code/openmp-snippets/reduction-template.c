@@ -17,12 +17,21 @@ int main(int argc, char **argv)
     b[i] = (-1)*(i%2) * i;
   }
 
+<<<<<<< HEAD
   /* Implement a parallel dot product using
+=======
+  double dotabparallel = 0;
+  start = omp_get_wtime();
+#pragma omp parallel default(none) shared(a, b, N, dotabparallel)
+  {
+    /* Implement a parallel dot product using
+>>>>>>> 4de2d81c2d7312d6a6a73583178eb1c8a0599c3b
      *
      * 1. The approach of reduction-hand.c
      * 2. the reduction clause
      * 3. critical sections to protect the shared updates
      * 4. atomics to protect the shared updates.
+<<<<<<< HEAD
      * 
      */
   
@@ -111,6 +120,13 @@ printf("Parallel atomics \t\ta.b = %.9g; took %.4g seconds \n", dotatomics, (sto
 
 
 
+=======
+     */
+    for (size_t i = 0; i < N; i++) {
+    }
+  }
+  printf("Parallel a.b = %.4g; took %.4g seconds\n", dotabparallel, omp_get_wtime() - start);
+>>>>>>> 4de2d81c2d7312d6a6a73583178eb1c8a0599c3b
   free(a);
   free(b);
   return 0;
