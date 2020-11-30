@@ -1,6 +1,7 @@
 #include <mpi.h>
 #include <stdio.h>
 
+
 static void ring_reduce(int *sendbuf, int *recvbuf, MPI_Comm comm)
 {
   /* Add my local contribution */
