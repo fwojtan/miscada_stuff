@@ -41,6 +41,30 @@ programming exercises. You're encouraged to collaborate in groups and
 ask questions of the lecturers and tutors if you get stuck, or want
 some clarification.
 
+### Reading for 2020-11-30 and 2020-12-03
+
+We'll continue with the MPI exercises, I added one on [MPI
+collectives]({{< ref "mpi-collectives.md" >}}). There are also some
+additional notes, with diagrams, on the different [collectives]({{<
+ref "notes/mpi/collectives.md" >}}) that MPI offers.
+
+We'll finish with some pointers to more [advanced topics]({{< ref
+"notes/mpi/advanced.md" >}}) in MPI. I'll also complete the exercise
+on [domain decomposition and halo exchanges]({{< ref "mpi-stencil.md"
+>}}) (which will use some collectives and non-blocking point-to-point
+communcation), so hopefully we'll be able to work on that in the live
+sessions too.
+
+### Reading for 2020-11-26
+
+We'll continue with the point to point messaging. I introduce
+[non-blocking messages]({{< ref "notes/mpi/point-to-point-nb.md" >}}).
+We'll continue to work on the messaging exercises in the live session,
+so you can either continue with sending [messages round a ring]({{<
+ref "mpi-ring.md" >}}), look at [ping-pong messaging]({{< ref
+"mpi-ping-pong.md" >}}), or [calculate π]({{< ref "mpi-pi.md" >}}).
+
+
 ### Reading for 2020-11-23
 
 This week we'll start looking at MPI. For the Monday session we will
